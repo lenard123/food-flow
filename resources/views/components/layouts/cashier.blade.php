@@ -5,12 +5,8 @@
             <img class="w-12 aspect-square" src="{{ url('assets/images/foodflow-2.png') }}" />
 
             <div class="flex-grow flex flex-col w-full my-8">
-                <a href="{{ url('/home') }}" class="text-center border-x-4 border-transparent py-2 text-xl text-slate-600">
+                <a href="{{ url('/') }}" class="text-center border-x-4 border-transparent py-2 text-xl text-slate-600">
                     <i class="fal fa-home"></i>
-                </a>
-
-                <a href="{{ url('/orders') }}" class="text-center border-x-4 border-transparent py-2 text-xl text-slate-600">
-                    <i class="fal fa-clock"></i>
                 </a>
 
                 <a href="{{ url('/products') }}" class="text-center border-x-4 border-transparent py-2 text-xl text-slate-600">
@@ -23,9 +19,13 @@
                     <i class="fal fa-cog"></i>
                 </a>
 
-                <a href="{{ url('/login') }}" class="text-center border-x-4 border-transparent py-2 text-xl text-slate-600">
-                    <i class="fal fa-sign-out"></i>
-                </a>
+                <form action="{{ url('/logout') }}" method="POST" class="w-full">
+                    @csrf
+                    <button type="submit" class="text-center w-full border-x-4 border-transparent py-2 text-xl text-slate-600">
+                        <i class="fal fa-sign-out"></i>
+                    </button>
+                </form>
+
             </div>
 
         </aside>

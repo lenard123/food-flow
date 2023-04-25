@@ -23,6 +23,12 @@
                 <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="/admin/users">
                     Users
                 </a>
+                <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="/admin/users">
+                    Settings
+                </a>
+                <a href="{{ url('/login') }}" class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="/admin/users">
+                    Logout
+                </a>
             </div>
 
         </aside>
