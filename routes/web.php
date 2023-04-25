@@ -14,3 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view('/login', 'pages.login');
+Route::view('/home', 'pages.cashier.home');
+Route::view('/products', 'pages.cashier.products');

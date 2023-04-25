@@ -5,7 +5,7 @@
             <h1 class="text-center font-bold text-4xl italic text-slate-800">Foodflow</h1>
             <p class="text-center text-xs text-slate-500">Lorem ipsum dolor sit amet consectetur</p>
 
-            <form class="mt-8">
+            <form class="mt-8" method="GET" action="{{ url('/home') }}">
                 <input type="email" class="border bg-slate-200 py-3 px-4 block w-full font-light focus:outline-none focus:border-primary-300" placeholder="Enter your email here.">
                 <input type="password" class="border bg-slate-200 py-3 px-4 block w-full mt-4 font-light focus:outline-none focus:border-primary-300" placeholder="Enter your password here.">
                 <button class="bg-primary py-3 text-sm w-full mt-4 text-white">Login</button>
