@@ -29,7 +29,10 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::group(['middleware' => 'admin'], function () {
         Route::view('/admin', 'pages.admin.dashboard');
+
         Route::get('/admin/categories', [CategoryController::class, 'index']);
+        Route::post('/admin/categories', [CategoryController::class, 'store']);
+
         Route::view('/admin/categories/new', 'pages.admin.categories-new');
         Route::view('/admin/products', 'pages.admin.products');
         Route::view('/admin/products/new', 'pages.admin.products-new');

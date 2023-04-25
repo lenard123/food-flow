@@ -13,4 +13,16 @@ class CategoryController extends Controller
             'categories' => Category::all()
         ]);
     }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'nullable',
+        ]);
+
+        Category::create($data);
+
+        return redirect('/admin/categories');
+    }
 }
