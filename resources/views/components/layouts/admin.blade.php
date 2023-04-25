@@ -8,26 +8,26 @@
             </div>
 
             <div class="p-6 flex flex-col gap-2">
-                <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="#">
+                <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="/admin">
                     Dashboard
                 </a>
-                <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="#">
+                <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="/admin/sales">
                     Sales
                 </a>
-                <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="#">
+                <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="/admin/categories">
                     Categories
                 </a>
-                <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="#">
+                <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="/admin/products">
                     Products
                 </a>
-                <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="#">
+                <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="/admin/users">
                     Users
                 </a>
             </div>
 
         </aside>
-        <div class="flex-grow">
-            <div class="w-full bg-white p-4 sticky top-0 z-10 flex justify-end">
+        <div class="flex-grow overflow-y-auto">
+            <div class="w-full bg-white p-4 sticky top-0 z-10 flex justify-end shadow-md">
                 <div class="flex items-center gap-4">
                     <div class="text-right">
                         <div>Lenard Mangay-ayam</div>
@@ -36,6 +36,8 @@
                     <img class="h-12 aspect-square" src="https://demo.tailadmin.com/src/images/user/user-01.png" />
                 </div>
             </div>
+
+            {{ $slot }}
         </div>
     </div>
 </x-layout.main>
