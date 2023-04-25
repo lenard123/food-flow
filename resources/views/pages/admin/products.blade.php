@@ -34,54 +34,33 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach ($products as $product)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex-shrink-0 h-20 w-20">
-                                <img class="h-20 w-20 object-cover" src="https://via.placeholder.com/150"
+                                <img class="h-20 w-20 object-cover" src="{{ url("storage/$product->image") }}"
                                     alt="Product image">
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">
-                                Product 1
+                                {{ $product->name }}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            <div class="text-sm text-gray-500">{{ $product->category->name }}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">$10.00</div>
+                            <div class="text-sm text-gray-900">₱{{ $product->price }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-center">
                             <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                             <a href="#" class="text-red-600 hover:text-red-900 ml-4">Delete</a>
                         </td>
-                    </tr>
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex-shrink-0 h-20 w-20">
-                                <img class="h-20 w-20 object-cover" src="https://via.placeholder.com/150"
-                                    alt="Product image">
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">
-                                Product 1
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-900">$10.00</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-center">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            <a href="#" class="text-red-600 hover:text-red-900 ml-4">Delete</a>
-                        </td>
-                    </tr>
+                    </tr>                        
+                    @endforeach
+
                 </tbody>
             </table>
 

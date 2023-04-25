@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,10 +33,12 @@ Route::group(['middleware' => 'auth'], function() {
 
         Route::get('/admin/categories', [CategoryController::class, 'index']);
         Route::post('/admin/categories', [CategoryController::class, 'store']);
-
         Route::view('/admin/categories/new', 'pages.admin.categories-new');
-        Route::view('/admin/products', 'pages.admin.products');
-        Route::view('/admin/products/new', 'pages.admin.products-new');
+
+        Route::get('/admin/products', [ProductController::class, 'index']);
+        Route::get('/admin/products/new', [ProductController::class, 'create']);
+        Route::post('/admin/products', [ProductController::class, 'store']);
+
         Route::view('/admin/users', 'pages.admin.users');
         Route::view('/admin/users/new', 'pages.admin.users-new');
     });
