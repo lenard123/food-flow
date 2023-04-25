@@ -7,7 +7,8 @@
     <title>Food Flow</title>
     <link rel="shortcut icon" href="{{ asset('/assets/images/foodflow-2.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('/assets/fontawesome/css/all.min.css') }}">
-    @vite('resources/css/app.css')
+    @viteReactRefresh
+    @vite(['resources/css/app.css', 'resources/js/app.jsx'])
 </head>
 <body>
     {{ $slot }}

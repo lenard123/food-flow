@@ -9,6 +9,10 @@
                     <i class="fal fa-home"></i>
                 </a>
 
+                <a href="{{ url('/orders') }}" class="text-center border-x-4 border-transparent py-2 text-xl text-slate-600">
+                    <i class="fal fa-clock"></i>
+                </a>
+
                 <a href="{{ url('/products') }}" class="text-center border-x-4 border-transparent py-2 text-xl text-slate-600">
                     <i class="fal fa-burger-soda"></i>
                 </a>

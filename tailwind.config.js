@@ -10,6 +10,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        black: '#1C2434',
         primary: {
           ...colors.blue,
           DEFAULT: colors.blue[500],

@@ -14,5 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::view('/login', 'pages.login');
+Route::view('/orders', 'pages.cashier.orders');
 Route::view('/home', 'pages.cashier.home');
 Route::view('/products', 'pages.cashier.products');
+
+Route::view('/admin', 'pages.admin.dashboard');
+Route::view('/admin/categories', 'pages.admin.categories');
+Route::view('/admin/products', 'pages.admin.products');
