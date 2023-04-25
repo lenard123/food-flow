@@ -1,7 +1,7 @@
 <x-layouts.cashier>
 
     <div class="flex h-full">
-        <div class="flex-grow p-8 overflow-y-auto">
+        <div class="flex-grow p-8 overflow-y-auto thin-scrollbar">
             <div class="flex justify-between items-center">
                 <div>
                     <h1 class="text-slate-800 text-2xl font-bold">Welcome, Garry</h1>
@@ -89,6 +89,5 @@
             </div>
         </div>
     </div>
-
 
 </x-layouts.cashier>
