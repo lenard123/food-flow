@@ -26,9 +26,12 @@
                 <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="/admin/users">
                     Settings
                 </a>
-                <a href="{{ url('/login') }}" class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="/admin/users">
-                    Logout
-                </a>
+                <form method="POST" action="{{ url('/logout') }}">
+                    @csrf
+                    <button type="submit" class="text-left py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="/admin/users">
+                        Logout
+                    </button>
+                </form>
             </div>
 
         </aside>
