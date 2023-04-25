@@ -1,7 +1,7 @@
 <x-layouts.cashier>
 
     <div class="flex h-full">
-        <div class="flex-grow p-8">
+        <div class="flex-grow p-8 overflow-y-auto">
             <div class="flex justify-between items-center">
                 <div>
                     <h1 class="text-slate-800 text-2xl font-bold">Welcome, Garry</h1>
@@ -15,6 +15,34 @@
                     </div>
                 </div>
             </div>
+
+            <div class="mt-6 flex gap-4">
+                <button class="bg-white py-3 px-6 font-bold text-sm shadow-md text-slate-700">Breakfast</button>
+                <button class="bg-primary text-white py-3 px-6 font-bold text-sm shadow-md">Burgers</button>
+                <button class="bg-white py-3 px-6 font-bold text-sm shadow-md text-slate-700">Platters</button>
+                <button class="bg-white py-3 px-6 font-bold text-sm shadow-md text-slate-700">Fries</button>
+                <button class="bg-white py-3 px-6 font-bold text-sm shadow-md text-slate-700">Drinks & Desserts</button>
+                <button class="bg-white py-3 px-6 font-bold text-sm shadow-md text-slate-700">Cafe</button>
+            </div>
+
+            <div class="mt-6 flex gap-4 flex-wrap">
+                @for ($i = 0; $i < 8; $i++)
+                <div class="bg-white p-2 w-60 shadow">
+                    <div class="relative">
+                        <img class="aspect-video object-cover" src="https://via.placeholder.com/400x300">
+                    </div>
+                    <h4 class="mt-3 font-bold text-slate-700 leading-5">Almond Brown Sugar Croissant</h4>
+                    <div class="mt-3 text-sm text-slate-500 font-light">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+                    </div>
+                    <div class="mt-3 flex items-end">
+                        <div class="font-bold text-xl text-primary">₱45.00</div>
+                        <div class="text-sm text-slate-500 font-semibold"> / 3pcs</div>
+                    </div>
+                </div>
+                @endfor
+            </div>
+
         </div>
         <div class="bg-white w-80 flex-shrink-0 shadow-sm p-4 py-8 flex flex-col">
             <div class="flex justify-between items-center">
