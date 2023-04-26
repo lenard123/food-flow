@@ -3,7 +3,6 @@
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProductController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +24,5 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/products', [ProductController::class, 'index']);
     Route::post('/orders', [OrderController::class, 'create']);
+    Route::get('/orders', [OrderController::class, 'index']);
 });

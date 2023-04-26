@@ -37,4 +37,9 @@ class OrderController extends Controller
             return $order;
         });
     }
+
+    public function index()
+    {
+        return Order::with('items')->get();
+    }
 }
