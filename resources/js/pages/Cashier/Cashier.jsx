@@ -33,7 +33,7 @@ export default function Cashier() {
 
     return (
         <>
-            <PaymentModal open={open} setOpen={setOpen} total={total}/>
+            <PaymentModal cart={cart} setCart={setCart} open={open} setOpen={setOpen} total={total}/>
             <div className="flex h-full">
                 <div className="flex-grow p-8 overflow-y-auto thin-scrollbar">
                     <div className="flex justify-between items-center">

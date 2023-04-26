@@ -1,6 +1,14 @@
 import { useState } from "react";
+import useCreateOrderMutation from "../../../queries/useCreateOrderMutation";
 
-export const PaymentModal = ({ open, setOpen }) => {
+export const PaymentModal = ({ open, setOpen, cart, setCart, total }) => {
+    const { mutate, isLoading } = useCreateOrderMutation({
+        onSuccess() {
+            alert("Order process successfully")
+            handleCancel()
+            setCart([])
+        }
+    })
     const [amount, setAmount] = useState("");
 
     const handleBackSpace = () => {
@@ -11,6 +19,21 @@ export const PaymentModal = ({ open, setOpen }) => {
     const handleCancel = () => {
       setAmount("")
       setOpen(false)
+    }
+
+    const handleProcess = () => {
+        if (isLoading) return;
+
+        const payment = parseFloat(amount)
+        if (isNaN(payment)) {
+            return alert("Invalid payment")
+        }
+
+        if (payment < total) {
+            return alert("Not enough payment")
+        }
+
+        mutate(cart)
     }
 
     if (!open) return null
@@ -97,8 +120,8 @@ export const PaymentModal = ({ open, setOpen }) => {
                         <i className="fal fa-arrow-left"></i>
                     </button>
                 </div>
-                <button className="w-full bg-primary text-white py-2 mt-4">
-                    Process Order
+                <button onClick={handleProcess} className="w-full bg-primary text-white py-2 mt-4">
+                    {isLoading && <i className="fal fa-spinner mr-2 fa-spin"></i>}Process Order
                 </button>
 
                 <button onClick={handleCancel} className=" text-black bg-slate-100 py-2 shadow w-full mt-2">
