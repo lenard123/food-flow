@@ -1,6 +1,22 @@
-export const ProductCard = ({ image, name, description, price }) => {
+export const ProductCard = ({ id, image, name, description, price, cart, setCart}) => {
+
+    const handleClick = () => {
+        if (cart.some(item => item.id === id)) 
+            return
+        
+        setCart(cart => {
+            return [...cart, {
+                id,
+                image,
+                name,
+                price,
+                quantity: 1
+            }]
+        })
+    }
+
     return (
-        <div className="bg-white p-2 w-60 shadow">
+        <div onClick={handleClick} className="bg-white p-2 w-60 shadow">
             <div className="relative">
                 <img className="aspect-video object-cover" src={`/storage/${image}`} />
             </div>
