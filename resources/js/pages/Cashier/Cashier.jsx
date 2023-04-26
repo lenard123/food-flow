@@ -1,6 +1,22 @@
+import { useState } from "react"
+import { Loading } from "../../components/Loading"
+import useCategoriesQuery from "../../queries/useCategoriesQuery"
+import { CategoryButton } from "./components/CategoryButton"
+import useProductsQuery from "../../queries/useProductsQuery"
+import { ProductCard } from "./components/ProductCard"
+import { EmptyProducts } from "./components/EmptyProducts"
 
 
 export default function Cashier() {
+    const [activeCategory, setActiveCategory] = useState(null)
+    const { data: products, isLoading } = useProductsQuery(activeCategory)
+    const { data: categories, isLoading: fetchingCategories } = useCategoriesQuery({
+        onSuccess(data) {
+            if (activeCategory === null)
+                setActiveCategory(data[0]?.id)
+        }
+    })
+
     return (
         <div className="flex h-full">
             <div className="flex-grow p-8 overflow-y-auto thin-scrollbar">
@@ -16,31 +32,22 @@ export default function Cashier() {
                         </div>
                     </div>
                 </div>
-                <div className="mt-6 flex gap-4">
-                    <button className="bg-white py-3 px-6 font-bold text-sm shadow-md text-slate-700">Breakfast</button>
-                    <button className="bg-primary text-white py-3 px-6 font-bold text-sm shadow-md">Burgers</button>
-                    <button className="bg-white py-3 px-6 font-bold text-sm shadow-md text-slate-700">Platters</button>
-                    <button className="bg-white py-3 px-6 font-bold text-sm shadow-md text-slate-700">Fries</button>
-                    <button className="bg-white py-3 px-6 font-bold text-sm shadow-md text-slate-700">Drinks &amp; Desserts</button>
-                    <button className="bg-white py-3 px-6 font-bold text-sm shadow-md text-slate-700">Cafe</button>
-                </div>
-                <div className="mt-6 flex gap-4 flex-wrap">
+                {fetchingCategories ? <Loading /> : (
+                    <>
+                        <div className="mt-6 flex gap-4">
+                            {categories.map(category => <CategoryButton setCategory={setActiveCategory} active={category.id === activeCategory} key={category.id} {...category} />)}
+                        </div>
+                        {isLoading ? <Loading /> : (
+                            <div className="mt-6 flex gap-4 flex-wrap">
+                                {products.length === 0 && <EmptyProducts />}
+                                {products.map(product => <ProductCard key={product.id} {...product} />)}
+                            </div>
+                        )}
 
-                    <div className="bg-white p-2 w-60 shadow">
-                        <div className="relative">
-                            <img className="aspect-video object-cover" src="https://via.placeholder.com/400x300" />
-                        </div>
-                        <h4 className="mt-3 font-bold text-slate-700 leading-5">Almond Brown Sugar Croissant</h4>
-                        <div className="mt-3 text-sm text-slate-500 font-light">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-                        </div>
-                        <div className="mt-3 flex items-end">
-                            <div className="font-bold text-xl text-primary">₱45.00</div>
-                            <div className="text-sm text-slate-500 font-semibold"> / 3pcs</div>
-                        </div>
-                    </div>
+                    </>
+                )}
 
-                </div>
+
             </div>
             <div className="bg-white w-80 flex-shrink-0 shadow-sm p-4 py-8 flex flex-col">
                 <div className="flex justify-between items-center">
