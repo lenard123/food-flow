@@ -1,4 +1,6 @@
 import { Loading } from "../../components/Loading";
+import useOrderCreatedListener from "../../listeners/useOrderCreatedListener";
+import useOrderStatusUpdatedListener from "../../listeners/useOrderStatusUpdatedListener";
 import useOrdersQuery from "../../queries/useOrdersQuery";
 import EmptyOrdersPage from "./components/EmptyOrdersPage";
 import { OrderItem } from "./components/OrderItem";
@@ -6,6 +8,9 @@ import { OrderItem } from "./components/OrderItem";
 export default function Orders() {
     const { data: orders, isLoading } = useOrdersQuery();
     const pendingOrders = orders?.filter(({status}) => ['preparing', 'pending'].includes(status))
+
+    useOrderCreatedListener()
+    useOrderStatusUpdatedListener()
 
     return (
         <div className="p-8 overflow-y-auto thin-scrollbar">

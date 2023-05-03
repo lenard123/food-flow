@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\OrderCreated;
+use App\Events\OrderStatusUpdated;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
@@ -34,6 +36,8 @@ class OrderController extends Controller
                 ]);
             }
 
+            event(new OrderCreated($order));
+
             return $order;
         });
     }
@@ -46,6 +50,8 @@ class OrderController extends Controller
 
         $order->status = $request->status;
         $order->save();
+
+        event(new OrderStatusUpdated($order->id, $request->status));
 
         return $order->load('items');
     }
