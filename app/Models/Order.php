@@ -19,7 +19,7 @@ class Order extends Model
 
     public function items()
     {
-        return $this->belongsToMany(Product::class, 'orders_items');
+        return $this->belongsToMany(Product::class, 'orders_items')->withPivot('quantity', 'price');
     }
 
     public static function getTodayOrdersCount()
