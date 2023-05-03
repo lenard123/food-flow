@@ -18,16 +18,24 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         User::create([
-            'firstname' => 'Lenard',
-            'lastname' => 'Mangay-ayam',
+            'firstname' => 'Russel',
+            'lastname' => 'Tajada',
             'role' => User::ROLE_ADMIN,
             'password' => bcrypt('password'),
-            'email' => 'lenard.mangayayam@gmail.com',
+            'email' => 'rus@gmail.com',
         ]);
 
-        Category::insert([
-            ['name'=>'Test1', 'description' => 'lorem ipsum'],
-            ['name'=>'Test2', 'description' => 'lorem ipsum'],
+        User::create([
+            'firstname' => 'Richard',
+            'lastname' => 'Veloria',
+            'role' => User::ROLE_CASHIER,
+            'password' => bcrypt('password'),
+            'email' => 'richard@gmail.com',
         ]);
+
+        // Category::insert([
+        //     ['name'=>'Test1', 'description' => 'lorem ipsum'],
+        //     ['name'=>'Test2', 'description' => 'lorem ipsum'],
+        // ]);
     }
 }
