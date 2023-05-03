@@ -38,6 +38,18 @@ class OrderController extends Controller
         });
     }
 
+    public function update(Request $request, Order $order)
+    {
+        $this->validate($request, [
+            'status' => 'required'
+        ]);
+
+        $order->status = $request->status;
+        $order->save();
+
+        return $order->load('items');
+    }
+
     public function index()
     {
         return Order::with('items')->get();

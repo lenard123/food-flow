@@ -1,23 +1,21 @@
 import moment from "moment";
 import { OrderItemProduct } from "./OrderItemProduct";
+import useUpdateOrderMutation from "../../../queries/useUpdateOrderMutation";
 
-export const OrderItemStatus = () => {
-    return (
-        <div className="flex items-center">
-            <span className="text-gray-600 font-semibold">Status:</span>
-            <div className="ml-2">
-                <span className="inline-flex rounded-md bg-yellow-100 text-yellow-800 px-2 py-1 text-xs font-semibold">
-                    Pending
-                </span>
-            </div>
-            <button className="ml-4 bg-gray-200 hover:bg-gray-300 rounded-md px-3 py-1 text-sm font-medium">
-                Update Status
-            </button>
-        </div>
-    );
-};
+export const OrderItem = ({ today_id, created_at, items, status, id }) => {
 
-export const OrderItem = ({ today_id, created_at, items }) => {
+    const { mutate, isLoading } = useUpdateOrderMutation(id)
+
+    const handlePrepareOrder = () => {
+        if (isLoading) return;
+        mutate('preparing')
+    }
+
+    const handleCompleteOrder = () => {
+        if (isLoading) return;
+        mutate('completed')
+    }
+
     const total = items.reduce((acm, item) => {
         return acm + item.pivot.quantity * item.pivot.price;
     }, 0);
@@ -32,7 +30,24 @@ export const OrderItem = ({ today_id, created_at, items }) => {
                         {moment(created_at).fromNow()}
                     </p>
                 </div>
-                <OrderItemStatus />
+                <div className="flex items-center">
+                    <span className="text-gray-600 font-semibold">Status:</span>
+                    <div className="ml-2">
+
+                        {status === 'pending' && (
+                            <span className="inline-flex rounded-md px-2 py-1 text-xs font-semibold bg-slate-200 text-slate-800">
+                                Pending
+                            </span>
+                        )}
+
+                        {status === 'preparing' && (
+                            <span className="inline-flex rounded-md px-2 py-1 text-xs font-semibold bg-yellow-100 text-yellow-800">
+                                Preparing
+                            </span>
+                        )}
+
+                    </div>
+                </div>
             </div>
             {/* Order Items */}
             <div className="p-4">
@@ -44,8 +59,26 @@ export const OrderItem = ({ today_id, created_at, items }) => {
             </div>
             {/* Order Total */}
             <div className="px-6 py-4 bg-white flex justify-between items-center">
-                <span className="font-semibold">Total:</span>
-                <span className="font-semibold">₱{total}</span>
+                <div className="flex gap-2">
+                    <span className="font-semibold">Total:</span>
+                    <span className="font-semibold">₱{total}</span>
+                </div>
+                <div className="flex gap-2">
+                    <button className="bg-gray-500 text-white hover:bg-gray-600 rounded-md px-3 py-2 text-sm font-medium">
+                        Cancel Order
+                    </button>
+                    {status === 'pending' && (
+                        <button onClick={handlePrepareOrder} className="inline-flex gap-2 items-center bg-primary text-white hover:bg-primary-600 rounded-md px-3 py-2 text-sm font-medium">
+                            {isLoading && <i className="fa fa-spinner fa-spin"></i>} Prepare Order
+                        </button>
+                    )}
+                    {status === 'preparing' && (
+                        <button onClick={handleCompleteOrder} className="inline-flex gap-2 items-center bg-green-500 text-white hover:bg-green-600 rounded-md px-3 py-2 text-sm font-medium">
+                            {isLoading && <i className="fa fa-spinner fa-spin"></i>} Complete Order
+                        </button>
+                    )}
+
+                </div>
             </div>
         </div>
     );

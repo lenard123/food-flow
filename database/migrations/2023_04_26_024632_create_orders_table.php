@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->unsignedInteger('today_id');
-            $table->string('status')->default(Order::STATUS_PREPARING);
+            $table->string('status')->default(Order::STATUS_PENDING);
             $table->timestamps();
         });
     }

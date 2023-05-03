@@ -1,9 +1,11 @@
 import { Loading } from "../../components/Loading";
 import useOrdersQuery from "../../queries/useOrdersQuery";
+import EmptyOrdersPage from "./components/EmptyOrdersPage";
 import { OrderItem } from "./components/OrderItem";
 
 export default function Orders() {
     const { data: orders, isLoading } = useOrdersQuery();
+    const pendingOrders = orders?.filter(({status}) => ['preparing', 'pending'].includes(status))
 
     return (
         <div className="p-8 overflow-y-auto thin-scrollbar">
@@ -22,12 +24,17 @@ export default function Orders() {
             {isLoading ? (
                 <Loading />
             ) : (
-                <div className="mt-6 flex flex-col gap-4">
-                    {orders.map((order) => (
-                        <OrderItem key={order.id} {...order} />
-                    ))}
-                </div>
-            )}
-        </div>
+                pendingOrders.length === 0 ? (
+                    <EmptyOrdersPage />
+                ) : (
+                    <div className="mt-6 flex flex-col gap-4">
+                        {pendingOrders.map((order) => (
+                            <OrderItem key={order.id} {...order} />
+                        ))}
+                    </div>
+                )
+            )
+            }
+        </div >
     );
 }
