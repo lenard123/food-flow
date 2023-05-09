@@ -2,10 +2,15 @@
 
 namespace App\Providers;
 
+use App\Events\OrderCompleted;
+use App\Events\OrderStatusUpdated;
+use App\Models\Order;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -25,7 +30,15 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Event::listen(function(OrderStatusUpdated $event) {
+            if ($event->status === Order::STATUS_COMPLETED) {
+                event(new OrderCompleted());
+            }
+        });
+
+        Event::listen(function (OrderCompleted $event) {
+            Cache::forget('today_sales');
+        });
     }
 
     /**

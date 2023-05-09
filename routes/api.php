@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -26,4 +27,5 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::post('/orders', [OrderController::class, 'create']);
     Route::get('/orders', [OrderController::class, 'index']);
     Route::patch('/orders/{order}', [OrderController::class, 'update']);
+    Route::get('/dashboard', [DashboardController::class, 'index']);
 });

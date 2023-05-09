@@ -39,7 +39,7 @@
             <div class="w-full bg-white p-4 sticky top-0 z-10 flex justify-end shadow-md">
                 <div class="flex items-center gap-4">
                     <div class="text-right">
-                        <div>Lenard Mangay-ayam</div>
+                        <div>{{ Auth::user()->fullname }}</div>
                         <div class="text-slate-500">Admin</div>
                     </div>
                     <img class="h-12 aspect-square" src="https://demo.tailadmin.com/src/images/user/user-01.png" />

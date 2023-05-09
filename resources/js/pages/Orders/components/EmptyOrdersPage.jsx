@@ -5,9 +5,9 @@ const EmptyOrdersPage = () => {
         <p className="text-lg text-gray-500 mb-8">
           Once you place an order, it will appear here.
         </p>
-        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+        <a href="/products" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
           Place an Order
-        </button>
+        </a>
       </div>
     );
   };
