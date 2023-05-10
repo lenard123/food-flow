@@ -24,9 +24,7 @@ export default function Queue() {
             }
 
             return false
-        });
-
-    console.log({ pendingOrders, completedOrders });
+        })
 
     return (
         <div className="grid grid-cols-3 divide-x h-screen">
