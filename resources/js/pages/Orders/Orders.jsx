@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Loading } from "../../components/Loading";
 import useOrderCreatedListener from "../../listeners/useOrderCreatedListener";
 import useOrderStatusUpdatedListener from "../../listeners/useOrderStatusUpdatedListener";
@@ -6,8 +7,10 @@ import EmptyOrdersPage from "./components/EmptyOrdersPage";
 import { OrderItem } from "./components/OrderItem";
 
 export default function Orders() {
+    const [status, setStatus] = useState('pending')
     const { data: orders, isLoading } = useOrdersQuery();
     const pendingOrders = orders?.filter(({status}) => ['preparing', 'pending'].includes(status))
+    const completedOrders = orders?.filter(({status}) => ['completed'].includes(status))
 
     useOrderCreatedListener()
     useOrderStatusUpdatedListener()
@@ -19,25 +22,52 @@ export default function Orders() {
                 Efficiently Manage Your Sales Orders
             </div>
             <div className="mt-6 flex gap-4">
-                <button className="bg-primary text-white py-3 px-6 font-bold text-sm shadow-md">
+                <button
+                    onClick={() => setStatus('pending')} 
+                    className={`
+                        ${status === 'pending' ? 'bg-primary text-white' : 'bg-white text-slate-700'} 
+                        py-3 px-6 font-bold text-sm shadow-md`}>
                     Pending Orders
                 </button>
-                <button className="bg-white py-3 px-6 font-bold text-sm shadow-md text-slate-700">
+                <button 
+                    onClick={() => setStatus('completed')}
+                    className={`
+                        ${status === 'completed' ? 'bg-primary text-white' : 'bg-white text-slate-700'} 
+                        py-3 px-6 font-bold text-sm shadow-md`}>
                     Completed
                 </button>
             </div>
             {isLoading ? (
                 <Loading />
             ) : (
-                pendingOrders.length === 0 ? (
-                    <EmptyOrdersPage />
+                status === 'pending' ? (
+                    pendingOrders.length === 0 ? (
+                        <EmptyOrdersPage 
+                            text="There is no pending orders yet."
+                            description="Once you place an order, it will appear here."
+                        />
+                    ) : (
+                        <div className="mt-6 flex flex-col gap-4">
+                            {pendingOrders.map((order) => (
+                                <OrderItem key={order.id} {...order} />
+                            ))}
+                        </div>
+                    )
                 ) : (
-                    <div className="mt-6 flex flex-col gap-4">
-                        {pendingOrders.map((order) => (
-                            <OrderItem key={order.id} {...order} />
-                        ))}
-                    </div>
+                    completedOrders.length === 0 ? (
+                        <EmptyOrdersPage 
+                            text="There is no pending orders yet."
+                            description="Once you place an order, it will appear here."
+                        />
+                    ) : (
+                        <div className="mt-6 flex flex-col gap-4">
+                            {completedOrders.map((order) => (
+                                <OrderItem key={order.id} {...order} />
+                            ))}
+                        </div>
+                    )
                 )
+
             )
             }
         </div >
