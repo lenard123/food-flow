@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['middleware' => 'cashier'], function () {
         Route::view('/', 'pages.cashier.orders');
         Route::view('/products', 'pages.cashier.products');
+        Route::view('/queue', 'pages.cashier.queue');
     });
 
     Route::group(['middleware' => 'admin'], function () {
