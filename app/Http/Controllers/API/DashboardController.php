@@ -18,6 +18,8 @@ class DashboardController extends Controller
             'yesterday_sales' => $this->getYesterdaySales(),
             'week_sales' => $this->getSalesOfLast7Days(),
             'all_time_sales' => $this->getAllTimeSales(),
+            'top_products' => $this->getTopProducts(),
+            'chart_data' => $this->getChartData(),
         ];
     }
 
@@ -38,7 +40,7 @@ class DashboardController extends Controller
             return $this->getSalesOfDay(Carbon::now()->yesterday());
         });
     }
-    
+
     private function getSalesOfLast7Days()
     {
         $expiration = Carbon::now()->diffInSeconds(Carbon::now()->endOfDay());
@@ -48,8 +50,8 @@ class DashboardController extends Controller
         });
     }
 
-    
-    
+
+
     private function getAllTimeSales()
     {
         $expiration = Carbon::now()->diffInSeconds(Carbon::now()->endOfDay());
@@ -62,5 +64,51 @@ class DashboardController extends Controller
     private function getSalesOfDay($date)
     {
         return DB::scalar("SELECT SUM(price * quantity) FROM orders inner join orders_items on orders.id = orders_items.order_id WHERE DATE(created_at) = Date(?);", [$date]);
+    }
+
+    private function getTopProducts()
+    {
+        $expiration = Carbon::now()->diffInSeconds(Carbon::now()->endOfDay());
+        return Cache::remember('top_products', $expiration, function () {
+            return DB::select("SELECT 
+                                    products.id,
+                                    products.name,
+                                    SUM(orders_items.price * orders_items.quantity) as sale
+                                FROM products
+                                LEFT JOIN orders_items on products.id = orders_items.product_id
+                                LEFT join orders on orders.id = orders_items.order_id
+                                WHERE orders.status = 'completed'
+                                GROUP BY products.id
+                                ORDER by sale DESC
+                                LIMIT 5");
+        });
+    }
+
+    public function getChartData()
+    {
+        $topProducts = collect($this->getTopProducts())->pluck('id')->toArray();
+        $result = collect(DB::select("SELECT 
+            products.id,
+            products.name,
+            Date(orders.created_at) as transaction_date,
+            SUM(orders_items.price * orders_items.quantity) as sale
+            FROM products 
+            left join orders_items on products.id = orders_items.product_id
+            inner join orders on orders.id = orders_items.order_id
+            where orders.status = 'completed'
+            AND products.id in (". implode("," , $topProducts) .")
+            group by transaction_date, product_id
+            order by transaction_date, sale"));
+
+        $labels = collect([]);
+        $start_date = Carbon::parse($result->first()->transaction_date);
+        $last_date = Carbon::parse($result->last()->transaction_date);
+        while ($start_date <= $last_date) {
+            $labels->add($start_date->format("Y-m-d"));
+            $start_date->addDay();
+        }
+        $data = $result->groupBy('id');
+        
+        return compact('start_date', 'last_date', 'data', 'labels');
     }
 }

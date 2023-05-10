@@ -38,6 +38,9 @@ class EventServiceProvider extends ServiceProvider
 
         Event::listen(function (OrderCompleted $event) {
             Cache::forget('today_sales');
+            Cache::forget('all_time_sales');
+            Cache::forget('seven_day_sales');
+            Cache::forget('top_products');
         });
     }
 

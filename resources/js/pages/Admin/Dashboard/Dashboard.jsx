@@ -1,5 +1,7 @@
 import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
+import useDashboardQuery from "../../../queries/useDashboardQuery";
+import colors from "tailwindcss/colors"
 
 const sampleData = [
     [1, 2, 3, 4, 5],
@@ -9,63 +11,81 @@ const sampleData = [
     [1, 4, 1, 6, 1],
 ];
 
-const BestSalesData = () => {
-    const datasets = sampleData.map((data, i) => {
+const chartColor = [
+    { borderColor: colors.blue[500] },
+    { borderColor: colors.green[500] },
+    { borderColor: colors.yellow[500] },
+    { borderColor: colors.purple[500] },
+    { borderColor: colors.cyan[500] },
+]
+
+const BestSalesData = ({ data }) => {
+    const labels = data?.chart_data?.labels ?? []
+
+    const datasets = Object.values(data?.chart_data?.data ?? {}).map((data,i) => {
         return {
-            id: i,
-            label: i,
-            data,
+            data: labels.map(label => data.find(x => x.transaction_date == label)?.sale ?? 0),
+            label: data[0].name,
+            cubicInterpolationMode: 'monotone',
             fill: true,
-            borderColor: "rgb(75, 192, 192)",
-            tension: 0.1,
-            cubicInterpolationMode: "monotone",
-        };
+            ...chartColor[i % chartColor.length]
+        }
     });
 
-    console.log({ datasets });
+    console.log({ datasets })
 
     return (
         <Line
             datasetIdKey="id"
             data={{
-                labels: [1, 2, 3, 4, 5],
+                labels,
                 datasets,
             }}
         />
     );
 };
 
+const DataCard = ({ label, value, loading }) => {
+    return (
+        <div className="bg-white shadow">
+            <div className="p-3 border-b font-bold text-primary">{label}</div>
+            <div className="p-3 text-slate-600">
+                {loading ? (
+                    <span className="italic">Loading...</span>
+                ) : (
+                    <span>₱{value}</span>
+                )}
+            </div>
+        </div>
+    );
+};
+
 export default function Dashboard() {
+    const { data, isLoading } = useDashboardQuery();
+
     return (
         <div className="p-3">
             <div className="grid grid-cols-4 gap-3">
-                <div className="bg-white shadow">
-                    <div className="p-3 border-b font-bold text-primary">
-                        Today
-                    </div>
-                    <div className="p-3 text-slate-600">₱1000.00</div>
-                </div>
-
-                <div className="bg-white shadow">
-                    <div className="p-3 border-b font-bold text-primary">
-                        Yesterday
-                    </div>
-                    <div className="p-3 text-slate-600">₱1000.00</div>
-                </div>
-
-                <div className="bg-white shadow">
-                    <div className="p-3 border-b font-bold text-primary">
-                        Last 7 days
-                    </div>
-                    <div className="p-3 text-slate-600">₱1000.00</div>
-                </div>
-
-                <div className="bg-white shadow">
-                    <div className="p-3 border-b font-bold text-primary">
-                        Total Sales
-                    </div>
-                    <div className="p-3 text-slate-600">₱1000.00</div>
-                </div>
+                <DataCard
+                    label="Today Sales"
+                    value={data?.today_sales}
+                    loading={isLoading}
+                />
+                <DataCard
+                    label="Yesterday Sales"
+                    value={data?.yesterday_sales}
+                    loading={isLoading}
+                />
+                <DataCard
+                    label="Last 7 days"
+                    value={data?.week_sales}
+                    loading={isLoading}
+                />
+                <DataCard
+                    label="All time Sales"
+                    value={data?.all_time_sales}
+                    loading={isLoading}
+                />
             </div>
 
             <div className="mt-3 flex gap-3">
@@ -73,7 +93,7 @@ export default function Dashboard() {
                     <h1 className="text-xl font-bold">
                         Best Sales Item All Time
                     </h1>
-                    <BestSalesData />
+                    <BestSalesData data={data} loading={isLoading}/>
                 </div>
 
                 <div className="bg-white shadow w-[300px]">
@@ -81,33 +101,15 @@ export default function Dashboard() {
                         <h1 className="text-xl font-bold">Top 5 Items</h1>
                     </div>
                     <div className="p-3">
-                      <div className="flex flex-col divide-y text-lg">
-                        <div className='flex justify-between py-2'>
-                          <div>1. Product 1</div>
-                          <div>2000PHP</div>
-                        </div>
+                        <div className="flex flex-col divide-y text-lg">
+                            {data?.top_products?.map((product, i) => (
+                                <div key={product.id} className="flex justify-between py-2">
+                                    <div>{i + 1}. {product.name}</div>
+                                    <div>₱{product.sale}</div>
+                                </div>
+                            ))}
 
-                        <div className='flex justify-between py-2'>
-                          <div>1. Product 1</div>
-                          <div>2000PHP</div>
                         </div>
-
-                        <div className='flex justify-between py-2'>
-                          <div>1. Product 1</div>
-                          <div>2000PHP</div>
-                        </div>
-
-                        <div className='flex justify-between py-2'>
-                          <div>1. Product 1</div>
-                          <div>2000PHP</div>
-                        </div>
-
-                        <div className='flex justify-between py-2'>
-                          <div>1. Product 1</div>
-                          <div>2000PHP</div>
-                        </div>
-
-                      </div>
                     </div>
                 </div>
             </div>
