@@ -2,6 +2,7 @@ import Chart from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import useDashboardQuery from "../../../queries/useDashboardQuery";
 import colors from "tailwindcss/colors"
+import useOrderCompletedListener from "../../../listeners/useOrderCompletedListener";
 
 const sampleData = [
     [1, 2, 3, 4, 5],
@@ -62,6 +63,8 @@ const DataCard = ({ label, value, loading }) => {
 
 export default function Dashboard() {
     const { data, isLoading } = useDashboardQuery();
+
+    useOrderCompletedListener()
 
     return (
         <div className="p-3">

@@ -11,9 +11,6 @@
                 <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="/admin">
                     Dashboard
                 </a>
-                <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="/admin/sales">
-                    Sales
-                </a>
                 <a class="py-2 px-4 text-white font-medium w-full hover:bg-slate-700" href="/admin/categories">
                     Categories
                 </a>

@@ -20,3 +20,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('orders', function () {
     return true;
 });
+
+Broadcast::channel('dashboard', function () {
+    return true;
+});
