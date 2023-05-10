@@ -30,46 +30,29 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach($users as $user)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="flex-shrink-0 h-12 w-12">
-                                <img class="h-12 w-12 rounded-full object-cover" src="https://via.placeholder.com/150"
+                                <img class="h-12 w-12 rounded-full object-cover" src="{{ $user->image }}"
                                     alt="User image">
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm font-medium text-gray-900">
-                                John Doe
+                                {{ $user->fullname }}
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500">Admin</div>
+                            <div class="text-sm text-gray-500">{{ $user->role }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-center">
                             <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                             <a href="#" class="text-red-600 hover:text-red-900 ml-4">Delete</a>
                         </td>
                     </tr>
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex-shrink-0 h-12 w-12">
-                                <img class="h-12 w-12 rounded-full object-cover" src="https://via.placeholder.com/150"
-                                    alt="User image">
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">
-                                Jane Doe
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm text-gray-500">User</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-center">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                            <a href="#" class="text-red-600 hover:text-red-900 ml-4">Delete</a>
-                        </td>
-                    </tr>
+                    @endforeach
+
                 </tbody>
             </table>
 
