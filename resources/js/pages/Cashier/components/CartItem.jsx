@@ -30,7 +30,7 @@ export const CartItem = ({ item, cart, setCart }) => {
     return (
         <div className="flex">
             <img
-                className="w-20 aspect-square flex-shrink-0 rounded"
+                className="w-20 aspect-square flex-shrink-0 rounded object-cover"
                 src={`/storage/${item.image}`}
             />
             <div className="flex-grow px-2 flex flex-col justify-between">

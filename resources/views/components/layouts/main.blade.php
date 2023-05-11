@@ -12,5 +12,9 @@
 </head>
 <body>
     {{ $slot }}
+
+    <script>
+        window.currentUser = @json(Auth::user())
+    </script>
 </body>
 </html>

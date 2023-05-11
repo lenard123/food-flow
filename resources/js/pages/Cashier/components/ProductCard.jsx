@@ -16,12 +16,12 @@ export const ProductCard = ({ id, image, name, description, price, cart, setCart
     }
 
     return (
-        <div onClick={handleClick} className="bg-white p-2 w-60 shadow">
+        <div onClick={handleClick} className="bg-white p-2 w-60 shadow flex flex-col selection:">
             <div className="relative">
-                <img className="aspect-video object-cover" src={`/storage/${image}`} />
+                <img className="aspect-square w-full object-cover" src={`/storage/${image}`} />
             </div>
             <h4 className="mt-3 font-bold text-slate-700 leading-5">{name}</h4>
-            <div className="mt-3 text-sm text-slate-500 font-light">
+            <div className="mt-3 text-sm text-slate-500 font-light flex-grow">
                 {description}
             </div>
             <div className="mt-3 flex items-end">
